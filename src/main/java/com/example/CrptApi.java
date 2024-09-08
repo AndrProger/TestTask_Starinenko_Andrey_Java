@@ -6,7 +6,6 @@ import okhttp3.*;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Semaphore;
@@ -65,12 +64,9 @@ public class CrptApi {
         }, 0, timeWindowMillis, TimeUnit.MILLISECONDS);
     }
 
-    // Method for creating a document for goods introduction
     public String createDocument(Document document, String signature) throws InterruptedException, IOException {
-        // Ensure rate limiting is respected
         semaphore.acquire();
 
-        // Create JSON request body
         String jsonBody = objectMapper.writeValueAsString(document);
 
         RequestBody body = RequestBody.create(jsonBody, JSON_MEDIA_TYPE);
@@ -97,7 +93,6 @@ public class CrptApi {
         scheduler.shutdown();
     }
 
-    // Example internal class for the document object
     public static class Document {
         @JsonProperty("description")
         public Description description;
@@ -137,15 +132,11 @@ public class CrptApi {
 
         @JsonProperty("reg_number")
         public String registrationNumber;
-
-        // Add getters, setters, and other methods as needed
     }
 
     public static class Description {
         @JsonProperty("participantInn")
         public String participantInn;
-
-        // Add getters, setters, and other methods as needed
     }
 
     public static class Product {
@@ -175,7 +166,5 @@ public class CrptApi {
 
         @JsonProperty("uitu_code")
         public String uituCode;
-
-        // Add getters, setters, and other methods as needed
     }
 }
